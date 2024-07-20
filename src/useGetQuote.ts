@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 
 type TQuote = { author: string; content: string };
 export default function useQetQuote() {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [quote, setQuote] = useState<TQuote>();
 
   useEffect(() => {
@@ -14,15 +14,11 @@ export default function useQetQuote() {
       setQuote(data);
     }
 
-    getQuote();
-  }, []);
-  async function getQuote() {
-    setLoading(true);
-    const response = await fetch(`https://api.quotable.io/random`);
-    const data = await response.json();
-    setLoading(false);
-    setQuote(data);
-  }
+    if (loading) {
+      getQuote();
+    }
+  }, [loading]);
+
   function copyQuote(text: string) {
     toast.success("Copid to clipboard");
     navigator.clipboard.writeText(text);
@@ -33,5 +29,5 @@ export default function useQetQuote() {
       "_blank"
     );
   }
-  return { loading, getQuote, quote, copyQuote, handleTwitterPost };
+  return { loading, setLoading, quote, copyQuote, handleTwitterPost };
 }

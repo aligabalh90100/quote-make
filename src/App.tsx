@@ -4,7 +4,7 @@ import useQetQuote from "./useGetQuote";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 function App() {
-  const { getQuote, loading, quote, copyQuote, handleTwitterPost } =
+  const { setLoading, loading, quote, copyQuote, handleTwitterPost } =
     useQetQuote();
 
   return (
@@ -105,7 +105,7 @@ function App() {
             </span>
           </div>
           <button
-            onClick={getQuote}
+            onClick={() => setLoading(true)}
             disabled={loading}
             className={`${
               loading ? "cursor-not-allowed" : ""
